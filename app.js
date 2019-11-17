@@ -4,8 +4,10 @@ const path = require('path')
 var bodyParser = require('body-parser')
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+var colors = require('colors');
 var fs = require('fs');
-console.log("ana hna")
+const session = require('express-session')
+////console.log("ana hna")
 app.locals.CURRENTUSER = "ADMIN";
 var CURRENTUSER = "ADMIN";
 app.locals.FCURRENTUSER;
@@ -17,7 +19,28 @@ app.use(bodyParser.urlencoded(
     extended: false
 }))
 
+app.use(
+    // Creates a session middleware with given options.
+    session({
 
+
+      name: 'sid',
+      user:'',
+      saveUninitialized: false,
+
+      resave: false,
+ 
+      secret: 'sssh, quiet! it\'s a secret!',
+
+  
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 2,
+
+        sameSite: true,
+
+      }
+    })
+  )
 
 
 app.get("/", function(req, res)
@@ -30,13 +53,18 @@ app.get("/", function(req, res)
 if (process.env.PORT)
 {
     app.listen(process.env.PORT, function()
-    {
-        console.log("server");
+    {   
+        console.log("   HEROKU ".red);
+        console.log(('OHH IT WORKS!'.rainbow).bold);
     });
 }
 else
 {
-    app.listen(8888, function() {});
+    app.listen(8888, function() {
+        console.log(' LOCAL HOST'.red);
+        console.log(('OHH IT WORKS!'.rainbow.bold));
+    });
+    
 }
 
 app.post("/login", function(req, res)
@@ -68,6 +96,8 @@ app.post("/login", function(req, res)
             {
                 app.locals.users = JSON.parse(data)
             })
+            req.session.user = FCURRENTUSER;
+            //console.log(req.session);
             res.redirect("home.ejs");
         }
         if (!flag)
@@ -104,7 +134,7 @@ app.post("/register", function(req, res)
             res.redirect("regf");
         if (!flag)
         {
-            console.log("ana hna 2")
+            //console.log("ana hna 2")
             app.locals.CURRENTUSER = req.body.username;
             CURRENTUSER = req.body.username;
             var obj = {
@@ -114,7 +144,8 @@ app.post("/register", function(req, res)
             };
             app.locals.FCURRENTUSER = obj;
             FCURRENTUSER = obj;
-
+            req.session.user = FCURRENTUSER;
+           // console.log(req.session);
             users.push(obj);
 
 
@@ -130,7 +161,13 @@ app.post("/register", function(req, res)
 
 app.post("/search", function(req, res)
 {
-
+    try{
+        console.log(req.session.user.name);
+        }
+        catch(error)
+        {
+        res.render("login");
+        }
     app.locals.hoba = req.body.Search;
     res.render("searchresults.ejs");
 
@@ -139,7 +176,18 @@ app.post("/search", function(req, res)
 app.post("/watchlist", function(req, res)
 {
     fs.readFile('users.json', 'utf8', function readFileCallback(err, data)
-    {
+    {   
+        try{
+            console.log(req.session.user.name);
+            }
+            catch(error)
+            {
+            res.render("login");
+            }
+        app.locals.CURRENTUSER= req.session.user.name;
+        CURRENTUSER= req.session.user.name;
+        FCURRENTUSER= req.session.user;
+        app.locals.FCURRENTUSER = req.session.user;
         users = JSON.parse(data);
         urlws = req.headers.referer;
         var i = 0;
@@ -149,8 +197,10 @@ app.post("/watchlist", function(req, res)
         var temp = -1;
         for (var i = 0; i < users.length; i++)
         {
-            console.log(users[i].name);
-
+            //console.log(users[i].name);
+            CURRENTUSER= req.session.user.name;
+            FCURRENTUSER= req.session.user;  
+            //console.log(req.session);
             if (users[i].name == CURRENTUSER)
             {
                 temp = i;
@@ -168,20 +218,20 @@ app.post("/watchlist", function(req, res)
 
         for (i = 0; i < users[temp].list.length; i++)
         {
-            console.log(users[temp].list[i] + "     " + linkws);
+            //console.log(users[temp].list[i] + "     " + linkws);
             if (users[temp].list[i] == linkws)
             {
-                console.log(found);
+                //console.log(found);
                 found = true;
             }
         }
         if (!found)
         {
-            //console.log(users[temp]);
-            //console.log(users[temp].list);
-            //console.log(linkws);
-            // console.log();
-            //console.log();
+            ////console.log(users[temp]);
+            ////console.log(users[temp].list);
+            ////console.log(linkws);
+            // //console.log();
+            ////console.log();
             users[temp].list.push(linkws)
             json = JSON.stringify(users);
             fs.writeFile('users.json', json, 'utf8', function() {});
@@ -195,21 +245,31 @@ app.get("*", function(req, res)
 {
     fs.readFile('users.json', 'utf8', function readFileCallback(err, data)
     {
-
-        var temp = -1;
-        for (var i = 0; i < users.length; i++)
-        {
-            console.log(users[i].name);
-
-            if (users[i].name == CURRENTUSER)
-            {
-                temp = i;
-            }
-
+        try{
+        console.log(req.session.user.name);
         }
-        app.locals.FCURRENTUSER = users[temp];
-        res.render(req.path.substring(1));
+        catch(error)
+        {
         res.render("login");
+        return;
+        }
+        CURRENTUSER= req.session.user.name;
+        FCURRENTUSER= req.session.user;  
+        var temp = -1;
+        // for (var i = 0; i < users.length; i++)
+        // {
+        //     //console.log(users[i].name);
+
+        //     if (users[i].name == CURRENTUSER)
+        //     {
+        //         temp = i;
+        //     }
+
+        // }
+        app.locals.FCURRENTUSER = req.session.user;
+        app.locals.CURRENTUSER = req.session.user.name;
+        res.render(req.path.substring(1));
+        //res.render("login");
 
 
 
