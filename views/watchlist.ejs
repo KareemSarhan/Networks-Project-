@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background-image: url("background3.jpg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            -webkit-text-stroke: 1px blue;
+        }
+          form
+        {
+                position: absolute;
+                left : 500px;
+
+        }
+            h5
+        {
+              position: absolute;
+                right: 50px;
+                   font-size: 30px;
+                   color :red;
+        }
+
+
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Watchlist</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<input  class="form-control mr-sm-2" type = "hidden" id="temp"  value = <%=FCURRENTUSER.list%>>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+        <a class="navbar-brand" style="color: rgb(191, 255, 161)">My Watchlist</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form method="POST" action='/search' class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Search"
+                    aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+
+
+                <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<%=CURRENTUSER%><h5>
+    </nav>
+    <ul id="myUL">
+    <li><a href="#">    
+                                <div class="container1">
+                                    <img id="image" src="/godfather.jpg" width="20%" height="20%">
+                                    <br>
+                                    <label id="label1" class="ml-4 my-2">The Godfather (1972)</label>
+                                    <br>
+                                    <button onclick="location.href = '/godfather';" id="godfather" class="btn btn-secondary ml-3"> View </button>
+                                </div>
+    </a></li>
+  <li><a href="#">    
+                                <div class="container2">
+                                        <img id="image" src="/godfather2.jpg" width="20%" height="20%">
+                                        <br>
+                                        <label id ="label2" class="ml-4 my-2">The Godfather: Part II (1974)</label>
+                                        <br>
+                                        <button onclick="location.href = '/godfather2';" id="godfather2" class="btn btn-secondary ml-3"> View </button>
+                                </div>
+    </a></li>
+
+  <li><a href="#">    <div class="container1">
+        <img id="image" src="/fightclub.jpg" width="20%" height="20%">
+        <br>
+        <label id="label1" class="ml-4 my-2">Fight Club (1999)</label>
+        <br>
+        <button onclick="location.href = '/fightclub';" id="fightclub" class="btn btn-secondary ml-3"> View </button>
+    </div>
+    </a></li>
+  <li><a href="#"><div class="container2">
+        <img id="image" src="/darkknight.jpg" width="20%" height="20%">
+        <br>
+        <label id ="label2" class="ml-4 my-2">The Dark Knight (2008)</label>
+        <br>
+        <button onclick="location.href = '/darkknight';" id="darkknight" class="btn btn-secondary ml-3"> View </button>
+    </div></a></li>
+
+  <li><a href="#"><div class="container1">
+        <img id="image" src="/scream.jpg" width="20%" height="20%">
+        <br>
+        <label id="label1" class="ml-4 my-2">Scream (1996)</label>
+        <br>
+        <button onclick="location.href = '/scream';" id="scream" class="btn btn-secondary ml-3"> View </button>
+    </div>
+    </a></li>
+  <li><a href="#"><div class="container2">
+        <img id="image" src="/conjuring.jpg" width="20%" height="20%">
+        <br>
+        <label id ="label2" class="ml-4 my-2">The Conjuring (2013)</label>
+        <br>
+        <button onclick="location.href = '/conjuring';" id="conjuring" class="btn btn-secondary ml-3"> View </button>
+    </div></a></li>
+
+</ul>
+
+
+<script>
+
+function myFunction() {
+  // Declare variables
+
+  var s, vw ,count ,input, filter, ul, li, a, i, txtValue;
+  count = 0;
+
+  input = document.getElementById('temp');
+
+
+
+
+  filter = input.value;
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
+    for (x=0; x<10;x++)
+    {
+     filter=   filter.replace('/','')
+    
+    }
+    filter = filter.split(',')
+
+    console.log(filter);
+    for (ass = 0;ass<filter.length;ass++){
+    switch(filter[ass]) {
+        case "godfather":
+            filter[ass] = "The Godfather (1972)"
+        break;
+         case "godfather2":
+            filter[ass] = "The Godfather: Part II (1974)"
+          break;
+         case "conjuring":
+            filter[ass] = "The Conjuring (2013)"
+          break;
+                   case "scream":
+            filter[ass] = "Scream (1996)"
+          break;
+                   case "fightclub":
+            filter[ass] = "Fight Club (1999)"
+          break;
+                   case "darkknight":
+            filter[ass] = "The Dark Knight (2008)"
+          break;
+        default:
+}
+    }
+        console.log(filter);
+    for (ass = 0;ass<li.length;ass++)
+    {
+        li[ass].style.display = "none";
+    }
+  // Loop through all list items, and hide those who don't match the search query
+  for(ass=0;ass<filter.length && filter != "";ass++){
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter[ass].toUpperCase()) > -1) {
+      li[i].style.display = "";
+      count++;
+    } else {
+    }
+  }
+
+
+}
+}
+</script>
+
+ <script type="text/javascript">
+    window.onload = myFunction();
+</script>
+</body>
+
+</html>
