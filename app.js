@@ -267,9 +267,15 @@ app.get("*", function(req, res)
 
         // }
         app.locals.FCURRENTUSER = req.session.user;
-        console.log(req.path.substring(1));
         app.locals.CURRENTUSER = req.session.user.name;
+        try{
         res.render(req.path.substring(1));
+        }
+        catch (error) 
+        {
+            res.render("login");
+        }
+        
         //res.render("login");
 
 
