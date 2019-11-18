@@ -45,7 +45,14 @@ app.use(
 
 app.get("/", function(req, res)
 {
-    res.render("login.ejs");
+    try{
+        req.session.user.name;    
+    res.render("home.ejs");
+    }
+    catch(error)
+    {
+        res.render("login.ejs");
+    }
 });
 
 
@@ -178,7 +185,7 @@ app.post("/watchlist", function(req, res)
     fs.readFile('users.json', 'utf8', function readFileCallback(err, data)
     {   
         try{
-            console.log(req.session.user.name);
+                (req.session.user.name);
             }
             catch(error)
             {
@@ -251,7 +258,7 @@ app.get("*", function(req, res)
         catch(error)
         {
             //console.log(req.path.substring(1,3))
-            if((req.path.substring(1,4))=="reg")
+            if((req.path.substring(1,4))=="reg"||(req.path.substring(1,4))=="log")
                res.render(req.path.substring(1));
                else 
              res.render("login");
