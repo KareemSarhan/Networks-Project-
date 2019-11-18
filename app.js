@@ -8,8 +8,8 @@ var colors = require('colors');
 var fs = require('fs');
 const session = require('express-session')
 ////console.log("ana hna")
-app.locals.CURRENTUSER = "ADMIN";
-var CURRENTUSER = "ADMIN";
+app.locals.CURRENTUSER ;
+var CURRENTUSER ;
 app.locals.FCURRENTUSER;
 var FCURRENTUSER;
 app.set('views', path.join(__dirname, 'views'))
@@ -162,7 +162,7 @@ app.post("/register", function(req, res)
 app.post("/search", function(req, res)
 {
     try{
-        console.log(req.session.user.name);
+        (req.session.user.name);
         }
         catch(error)
         {
@@ -236,7 +236,7 @@ app.post("/watchlist", function(req, res)
             json = JSON.stringify(users);
             fs.writeFile('users.json', json, 'utf8', function() {});
         }
-        //res.redirect("watchlist");
+        //  res.redirect("watchlist");
         res.redirect(linkws);
     })
 
@@ -246,11 +246,15 @@ app.get("*", function(req, res)
     fs.readFile('users.json', 'utf8', function readFileCallback(err, data)
     {
         try{
-        console.log(req.session.user.name);
+        req.session.user.name;
         }
         catch(error)
         {
-        res.render("login");
+            //console.log(req.path.substring(1,3))
+            if((req.path.substring(1,4))=="reg")
+               res.render(req.path.substring(1));
+               else 
+             res.render("login");
         return;
         }
         CURRENTUSER= req.session.user.name;

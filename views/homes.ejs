@@ -1,4 +1,6 @@
-<html lang="en" class="gr__localhost"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <style>
         body {
             background-image: url("background3.jpg");
@@ -40,13 +42,13 @@
             left: 80px;
             top: 370px;
         }
-          form
+        form
         {
-                position: absolute;
-                left : 500px;
-
+            position: absolute;
+            left: 650px;
+            top: 10px;
         }
-h5
+            h5
         {
               position: absolute;
                 right: 50px;
@@ -60,20 +62,23 @@ h5
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Movies</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<form>
-<body data-gr-c-s-loaded="true">
+
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
         <a class="navbar-brand" style="color: rgb(191, 255, 161)">Movies</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             </ul>
-            <form method="POST" action="/search" class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Search" aria-label="Search">
+            <form method="POST" action='/search' class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Search"
+                    aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
@@ -89,18 +94,11 @@ h5
 
 
     </style>
-         <h5><%=CURRENTUSER%><h5>
-
-
-    </style>
                                 <h5 >&nbsp;&nbsp;&nbsp;&nbsp;<%=CURRENTUSER%><h5>
     </nav>
-    </form>
 
     <div class="container">
-        <h1>Welcome <%=CURRENTUSER%></h1>
-        <h1>You Have Regeistered</h1>
-
+        <h1>Registration successfully completed! </h1>
     </div>
     <div class="container1">
         <img id="image" src="/drama.png" width="100" height="100">
@@ -126,5 +124,5 @@ h5
     <div class="watchlist">
         <button onclick="location.href = '/watchlist';" id="watchlist" class="btn btn-secondary ml-3" style="width: 300px;">My Watchlist</button>
     </div>
-
-</body></html>
+</body>
+</html>
